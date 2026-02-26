@@ -8,17 +8,34 @@ export const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [chats, setchats] = useState([]);
-  const [selectedchat, setSelectedchat] = usestate(null);
-  const [theme, setTheme] = usestate(localStorage.getItem("theme") || "light");
+  const [selectedchat, setSelectedchat] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const fetchUser = async () => {
     setUser(dummyUserData);
   };
 
-  const fetchChats = async () => {
+  const fetchUserChats = async () => {
     setchats(dummyChats);
     setSelectedchat(dummyChats[0]);
   };
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    if (user) {
+      fetchUserChats();
+    } else {
+      setchats([]);
+      setSelectedchat(null);
+    }
+  }, [user]);
 
   useEffect(() => {
     fetchUser();
@@ -35,8 +52,6 @@ export const AppContextProvider = ({ children }) => {
     setSelectedchat,
     theme,
   };
-
-  const value = {};
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
