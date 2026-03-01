@@ -2,15 +2,16 @@
 
 @import "tailwindcss";
 
-/* @custom-variant dark (&:where(.dark,.dark *)) */
+@custom-variant dark (&:where(.dark,.dark *)); /* ✅ v4 way of dark mode */
 
 * {
   font-family: "Outfit", sans-serif;
 }
 
-/* @theme {
-  --color-primary: #e6ccff;
+@theme {
+  --color-primary: #e6ccff; /* ✅ v4 way of custom colors */
 }
+
 ::-webkit-scrollbar {
   display: none;
-} */
+}

@@ -18,7 +18,7 @@ function App() {
         />
       )}
       <div className="dark:bg-linear-to-b from-[#242124]to-[#000000] dark:text-white ">
-        <div className="flex h-screen w-screen">
+        <div className="flex h-screen w-screen ">
           <Sidebar isMenuOpen={isMenuOpen} setisMenuOpen={setisMenuOpen} />
           <Routes>
             <Route path="/" element={<ChatBox />} />
