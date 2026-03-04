@@ -36,7 +36,7 @@ const Sidebar = ({ isMenuOpen, setisMenuOpen }) => {
 
       {/* recentchat */}
       {chats.length > 0 && <p className="mt-4 text-sm">recent Chats</p>}
-      <div className="flex-1 overflow-y-scroll mt-3 text-sm space-y-3">
+      <div className="flex-1 overflow-y-auto mt-3 text-sm space-y-3">
         {chats
           .filter((chat) =>
             chat.messages[0]
