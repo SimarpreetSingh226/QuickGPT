@@ -10,7 +10,7 @@ const Sidebar = ({ isMenuOpen, setisMenuOpen }) => {
 
   return (
     <div
-      className={`flex flex-col h-screen w-72 max-md:w-full p-5 dark:bg-linear-to-b from-[#242124]/30 to-[#000000]/30 border-r border-[#80609f]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute max-md:top-0 max-md:left-0 max-md:z-50 ${!isMenuOpen && "max-md:-translate-x-full"}`}
+      className={`flex-shrink-0 flex flex-col h-screen w-72 max-md:w-full p-5 dark:bg-linear-to-b from-[#242124]/30 to-[#000000]/30 border-r border-[#80609f]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute max-md:top-0 max-md:left-0 max-md:z-50 ${!isMenuOpen && "max-md:-translate-x-full"}`}
     >
       {/* logo */}
       <img
