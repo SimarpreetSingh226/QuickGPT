@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { dummyPlans } from "../assets/assets";
+import Loading from "./Loading";
 
 const Credits = () => {
   const [plans, setPlans] = useState([]);
@@ -12,6 +13,8 @@ const Credits = () => {
   useEffect(() => {
     fetchPlans();
   }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="max-w-7xl h-screen overflow-y-auto mx-auto px-4 sm:px-6 lg:px-8 py-12 ">
