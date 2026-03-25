@@ -1,7 +1,7 @@
 // controllers/messageController.js
 import axios from "axios";
-import Chat from "../models/chat.js";
-import User from "../models/user.js";
+import Chat from "../models/Chat.js";
+import User from "../models/User.js";
 import imagekit from "../configs/imageKit.js";
 import openai from "../configs/openai.js";
 
@@ -13,10 +13,7 @@ export const textMessageController = async (req, res) => {
 
     // Check credits
     if (req.user.credits < 1) {
-      return res.json({
-        success: false,
-        message: "You don't have enough credits",
-      });
+      return res.json({ success: false, message: "You don't have enough credits" });
     }
 
     // Find chat or create if not found
@@ -31,24 +28,15 @@ export const textMessageController = async (req, res) => {
     }
 
     // Push user message
-    chat.messages.push({
-      role: "user",
-      content: prompt,
-      timestamp: Date.now(),
-      isImage: false,
-    });
+    chat.messages.push({ role: "user", content: prompt, timestamp: Date.now(), isImage: false });
 
     // Call OpenAI Gemini
     const { choices } = await openai.chat.completions.create({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       messages: [{ role: "user", content: prompt }],
     });
 
-    const reply = {
-      ...choices[0].message,
-      timestamp: Date.now(),
-      isImage: false,
-    };
+    const reply = { ...choices[0].message, timestamp: Date.now(), isImage: false };
 
     chat.messages.push(reply);
     await chat.save();
@@ -70,10 +58,7 @@ export const imageMessageController = async (req, res) => {
 
     // Check credits
     if (req.user.credits < 2) {
-      return res.json({
-        success: false,
-        message: "You don't have enough credits",
-      });
+      return res.json({ success: false, message: "You don't have enough credits" });
     }
 
     // Find chat or create if not found
@@ -88,12 +73,7 @@ export const imageMessageController = async (req, res) => {
     }
 
     // Push user message
-    chat.messages.push({
-      role: "user",
-      content: prompt,
-      timestamp: Date.now(),
-      isImage: false,
-    });
+    chat.messages.push({ role: "user", content: prompt, timestamp: Date.now(), isImage: false });
 
     // Encode prompt for ImageKit
     const encodedPrompt = encodeURIComponent(prompt);
@@ -102,16 +82,9 @@ export const imageMessageController = async (req, res) => {
     // Fetch AI image with timeout
     let aiImageResponse;
     try {
-      aiImageResponse = await axios.get(generatedImageUrl, {
-        responseType: "arraybuffer",
-        timeout: 20000,
-      });
+      aiImageResponse = await axios.get(generatedImageUrl, { responseType: "arraybuffer", timeout: 20000 });
     } catch (err) {
-      return res.json({
-        success: false,
-        message:
-          "ImageKit AI service unavailable or timed out. Try again later.",
-      });
+      return res.json({ success: false, message: "ImageKit AI service unavailable or timed out. Try again later." });
     }
 
     // Convert to Base64
@@ -143,3 +116,5 @@ export const imageMessageController = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+
